@@ -20,13 +20,8 @@
 Note: 
 1) The current version of the code is for serial single processor computer
 with Fortran90 compiler.
-To run the code on a parall computer with MPI, the user has to 
-comment out the line "use mpistub" in Contrl/Input.f90, DataStruct/Data.f90,
-DataStruct/Pgrid.f90, DataStruct/PhysConst.f90, and Func/Timer.f90. 
-The user also has to remove the mpif.h file under the Appl, Control, DataStruct, 
-and Func directories. 
-The user also has to modify the Makefile to remove the mpistub.o inside the file
-and to use the appropriate parallel F90 compiler such as mpif90.
+To run the code on a parallel computer with MPI, the user has to
+specify the flag "-DUSE_MPI=ON" when invoking cmake.
 2) The phaseOpt.py is used to find the driven phase of a RF cavity with initial 
 design phase. This code needs to be modified for each input ImpactT.in file
 in order to use it correctly.
