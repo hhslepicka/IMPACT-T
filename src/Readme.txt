@@ -21,7 +21,9 @@ Note:
 1) The current version of the code is for serial single processor computer
 with Fortran90 compiler.
 To run the code on a parallel computer with MPI, the user has to
-specify the flag "-DUSE_MPI=ON" when invoking cmake.
+specify the flag "USE_MPI=1" along with a MPI compatible compiler and linker via
+ the CC and LINK flags when invoking make, e.g. make CC=mpif90 LINK=mpif90 USE_MPI=1.
+For CMake users just need to specify "-DUSE_MPI=1" when invoking cmake.
 2) The phaseOpt.py is used to find the driven phase of a RF cavity with initial 
 design phase. This code needs to be modified for each input ImpactT.in file
 in order to use it correctly.
