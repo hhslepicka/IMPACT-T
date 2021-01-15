@@ -62,6 +62,7 @@ if(USE_MPI)
     find_package(MPI REQUIRED)
     add_definitions(${MPI_Fortran_COMPILE_FLAGS} -DUSE_MPI)
     include_directories(${MPI_Fortran_INCLUDE_PATH})
+    set(OUTPUT_NAME "ImpactTexe-mpi")
 else()
     configure_file(mpif_single.h mpif.h COPYONLY)
     list(APPEND _sources mpistub.f90)
@@ -73,5 +74,4 @@ target_link_libraries(${OUTPUT_NAME} ${MPI_Fortran_LIBRARIES})
 # Enables preprocessing
 target_compile_options(${OUTPUT_NAME} PRIVATE -cpp)
 
-install(TARGETS ${OUTPUT_NAME}
-        RUNTIME DESTINATION bin)
+install(TARGETS ${OUTPUT_NAME} RUNTIME DESTINATION bin)
