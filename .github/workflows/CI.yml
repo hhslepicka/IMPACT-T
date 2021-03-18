@@ -27,7 +27,7 @@ jobs:
           make CC=gfortran LINK=gfortran
 
       - name: Build - MPI
-        if: matrix.mpi == 'nompi'
+        if: matrix.mpi != 'nompi'
         run: |
           cd src/
           make CC=gfortran LINK=gfortran USE_MPI=1
