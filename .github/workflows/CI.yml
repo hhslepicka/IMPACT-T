@@ -4,41 +4,41 @@ on: [push, pull_request]
 
 jobs:
   make:
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest']
         mpi: ['nompi', 'openmpi', 'mpich']
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - name: Install GFortran
         run: sudo apt install gfortran make
 
       - name: Install MPI - ${{ matrix.mpi }}
-        if: matrix.mpi != "nompi"
+        if: matrix.mpi != 'nompi'
         run: sudo apt install lib${{ matrix.mpi }}-dev
 
       - name: Build - No MPI
-        if: matrix.mpi == "nompi"
+        if: matrix.mpi == 'nompi'
         run: |
           cd src/
           make CC=gfortran LINK=gfortran
 
       - name: Build - MPI
-        if: matrix.mpi == "nompi"
+        if: matrix.mpi == 'nompi'
         run: |
           cd src/
           make CC=gfortran LINK=gfortran USE_MPI=1
 
       - name: Test - No MPI
-        if: matrix.mpi == "nompi"
+        if: matrix.mpi == 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/example/Sample1
           $GITHUB_WORKSPACE/src/ImpactTexe
 
       - name: Test - MPI
-        if: matrix.mpi != "nompi"
+        if: matrix.mpi != 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/example/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
@@ -56,11 +56,11 @@ jobs:
         run: sudo apt install gfortran make
 
       - name: Install MPI - ${{ matrix.mpi }}
-        if: matrix.mpi != "nompi"
+        if: matrix.mpi != 'nompi'
         run: sudo apt install lib${{ matrix.mpi }}-dev
 
       - name: Build - No MPI
-        if: matrix.mpi == "nompi"
+        if: matrix.mpi == 'nompi'
         run: |
           mkdir build
           cd build
@@ -68,7 +68,7 @@ jobs:
           make
 
       - name: Build - MPI
-        if: matrix.mpi != "nompi"
+        if: matrix.mpi != 'nompi'
         run: |
           mkdir build
           cd build
@@ -76,13 +76,13 @@ jobs:
           make
 
       - name: Test - No MPI
-        if: matrix.mpi == "nompi"
+        if: matrix.mpi == 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/example/Sample1
           $GITHUB_WORKSPACE/build/ImpactTexe
 
       - name: Test - MPI
-        if: matrix.mpi != "nompi"
+        if: matrix.mpi != 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/example/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
