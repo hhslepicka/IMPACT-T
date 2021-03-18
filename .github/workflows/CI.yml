@@ -30,7 +30,7 @@ jobs:
         if: matrix.mpi != 'nompi'
         run: |
           cd src/
-          make CC=gfortran LINK=gfortran USE_MPI=1
+          make CC=mpifort LINK=mpifort USE_MPI=1
 
       - name: Test - No MPI
         if: matrix.mpi == 'nompi'
@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install GFortran
-        run: sudo apt install gfortran make
+        run: sudo apt install gfortran cmake
 
       - name: Install MPI - ${{ matrix.mpi }}
         if: matrix.mpi != 'nompi'
@@ -87,6 +87,10 @@ jobs:
       - name: Test - MPI - ${{ matrix.mpi }}
         if: matrix.mpi != 'nompi'
         run: |
+          echo "Current Dir: `pwd`"
+          echo $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE/examples
           cd $GITHUB_WORKSPACE/examples/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/build/ImpactTexe-mpi
