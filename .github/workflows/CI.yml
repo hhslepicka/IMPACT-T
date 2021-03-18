@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install GFortran
         run: sudo apt install gfortran make
-      - name: Install MPI
+      - name: Install MPI - ${{ matrix.mpi }}
         if: ${{ matrix.mpi }} != "nompi"
         run: sudo apt install lib${{ matrix.mpi }}-dev
       - name: Build - No MPI
@@ -49,7 +49,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install GFortran
         run: sudo apt install gfortran make
-      - name: Install MPI
+      - name: Install MPI - ${{ matrix.mpi }}
         if: ${{ matrix.mpi }} != "nompi"
         run: sudo apt install lib${{ matrix.mpi }}-dev
       - name: Build - No MPI
