@@ -67,7 +67,7 @@ jobs:
           cmake ../src
           make
 
-      - name: Build - MPI
+      - name: Build - MPI - ${{ matrix.mpi }}
         if: matrix.mpi != 'nompi'
         run: |
           mkdir build
@@ -81,7 +81,7 @@ jobs:
           cd $GITHUB_WORKSPACE/examples/Sample1
           $GITHUB_WORKSPACE/build/ImpactTexe
 
-      - name: Test - MPI
+      - name: Test - MPI - ${{ matrix.mpi }}
         if: matrix.mpi != 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/examples/Sample1
