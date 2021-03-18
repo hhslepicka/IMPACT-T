@@ -34,13 +34,13 @@ jobs:
       - name: Test - No MPI
         if: matrix.mpi == 'nompi'
         run: |
-          cd $GITHUB_WORKSPACE/example/Sample1
+          cd $GITHUB_WORKSPACE/examples/Sample1
           $GITHUB_WORKSPACE/src/ImpactTexe
 
       - name: Test - MPI
         if: matrix.mpi != 'nompi'
         run: |
-          cd $GITHUB_WORKSPACE/example/Sample1
+          cd $GITHUB_WORKSPACE/examples/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/src/ImpactTexe
   cmake:
@@ -78,12 +78,12 @@ jobs:
       - name: Test - No MPI
         if: matrix.mpi == 'nompi'
         run: |
-          cd $GITHUB_WORKSPACE/example/Sample1
+          cd $GITHUB_WORKSPACE/examples/Sample1
           $GITHUB_WORKSPACE/build/ImpactTexe
 
       - name: Test - MPI
         if: matrix.mpi != 'nompi'
         run: |
-          cd $GITHUB_WORKSPACE/example/Sample1
+          cd $GITHUB_WORKSPACE/examples/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/build/ImpactTexe-mpi
