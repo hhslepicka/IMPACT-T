@@ -8,7 +8,8 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest']
-        mpi: ['nompi', 'openmpi', 'mpich']
+        mpi: ['nompi', 'openmpi']
+        #mpi: ['nompi', 'openmpi', 'mpich']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -43,47 +44,47 @@ jobs:
           cd $GITHUB_WORKSPACE/examples/Sample1
           sed -i "" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/src/ImpactTexe
-  cmake:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
-        mpi: [ nompi, openmpi, mpich ]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install GFortran
-        run: sudo apt install gfortran make
-
-      - name: Install MPI - ${{ matrix.mpi }}
-        if: matrix.mpi != 'nompi'
-        run: sudo apt install lib${{ matrix.mpi }}-dev
-
-      - name: Build - No MPI
-        if: matrix.mpi == 'nompi'
-        run: |
-          mkdir build
-          cd build
-          cmake ../src
-          make
-
-      - name: Build - MPI - ${{ matrix.mpi }}
-        if: matrix.mpi != 'nompi'
-        run: |
-          mkdir build
-          cd build
-          cmake ../src -DUSE_MPI=ON
-          make
-
-      - name: Test - No MPI
-        if: matrix.mpi == 'nompi'
-        run: |
-          cd $GITHUB_WORKSPACE/examples/Sample1
-          $GITHUB_WORKSPACE/build/ImpactTexe
-
-      - name: Test - MPI - ${{ matrix.mpi }}
-        if: matrix.mpi != 'nompi'
-        run: |
-          cd $GITHUB_WORKSPACE/examples/Sample1
-          sed -i "" '5s/1 1/2 1/' ImpactT.in
-          mpirun -n 2 $GITHUB_WORKSPACE/build/ImpactTexe-mpi
+#  cmake:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        os: [ ubuntu-latest ]
+#        mpi: [ nompi, openmpi, mpich ]
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Install GFortran
+#        run: sudo apt install gfortran make
+#
+#      - name: Install MPI - ${{ matrix.mpi }}
+#        if: matrix.mpi != 'nompi'
+#        run: sudo apt install lib${{ matrix.mpi }}-dev
+#
+#      - name: Build - No MPI
+#        if: matrix.mpi == 'nompi'
+#        run: |
+#          mkdir build
+#          cd build
+#          cmake ../src
+#          make
+#
+#      - name: Build - MPI - ${{ matrix.mpi }}
+#        if: matrix.mpi != 'nompi'
+#        run: |
+#          mkdir build
+#          cd build
+#          cmake ../src -DUSE_MPI=ON
+#          make
+#
+#      - name: Test - No MPI
+#        if: matrix.mpi == 'nompi'
+#        run: |
+#          cd $GITHUB_WORKSPACE/examples/Sample1
+#          $GITHUB_WORKSPACE/build/ImpactTexe
+#
+#      - name: Test - MPI - ${{ matrix.mpi }}
+#        if: matrix.mpi != 'nompi'
+#        run: |
+#          cd $GITHUB_WORKSPACE/examples/Sample1
+#          sed -i "" '5s/1 1/2 1/' ImpactT.in
+#          mpirun -n 2 $GITHUB_WORKSPACE/build/ImpactTexe-mpi
