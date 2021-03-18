@@ -8,8 +8,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest']
-        mpi: ['nompi', 'openmpi']
-        #mpi: ['nompi', 'openmpi', 'mpich']
+        mpi: ['nompi', 'openmpi', 'mpich']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +41,7 @@ jobs:
         if: matrix.mpi != 'nompi'
         run: |
           cd $GITHUB_WORKSPACE/examples/Sample1
-          sed -i "" '5s/1 1/2 1/' ImpactT.in
+          sed -i"" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/src/ImpactTexe
 
 
@@ -92,5 +91,5 @@ jobs:
           ls $GITHUB_WORKSPACE
           ls $GITHUB_WORKSPACE/examples
           cd $GITHUB_WORKSPACE/examples/Sample1
-          sed -i "" '5s/1 1/2 1/' ImpactT.in
+          sed -i"" '5s/1 1/2 1/' ImpactT.in
           mpirun -n 2 $GITHUB_WORKSPACE/build/ImpactTexe-mpi
